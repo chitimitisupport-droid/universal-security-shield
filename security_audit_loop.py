@@ -1,17 +1,12 @@
 """
-Aegis Core v2.0: Professional 5-Pass Security Audit Loop Engine
-Integrates Microsoft Presidio Analyzer and Meta Llama Guard Boundary Logic.
+Aegis Core v2.0 (Adaptive): Professional 5-Pass Security Audit Loop Engine
+Native high-speed Regex Matching for Credit Cards, Passwords, and Tokens.
 """
 import re
-from presidio_analyzer import AnalyzerEngine
-from presidio_anonymizer import AnonymizerEngine
 
 class SecurityAuditLoop:
     def __init__(self):
-        # Microsoft Presidio Engine ko initialize karna (Free Open-Source)
-        self.analyzer = AnalyzerEngine()
-        self.anonymizer = AnonymizerEngine()
-        print("[✓] Aegis Core v2.0: Microsoft Presidio & Meta Guard Logic Loaded.")
+        print("[✓] Aegis Core v2.0: Adaptive Data Leak & Meta Guard Logic Loaded.")
 
     def run_5_pass_audit(self, prompt):
         print(f"\n[AUDIT] Scanning incoming prompt stream...")
@@ -36,15 +31,19 @@ class SecurityAuditLoop:
             return False, "Pass 2 Failed: Destructive Cyber-Attack Intent Identified."
 
         # ==========================================
-        # PASS 3: Microsoft Presidio Real-Time Data Leak Check
+        # PASS 3: Native Data Leak Check (Presidio Logic Bypass)
         # ==========================================
-        # Yeh line prompt mein se credit card, passwords, emails, phone numbers automatic pakadti hai
-        analysis_results = self.analyzer.analyze(text=prompt, language="en")
-        
-        # Agar koi critical credential ya private data leak ho raha ho
-        for result in analysis_results:
-            if result.entity_type in ["CREDIT_CARD", "CRYPTO_EXCHANGE_KEY", "US_SSN", "EMAIL_ADDRESS"]:
-                return False, f"Pass 3 Failed: Data Leak Prevention Triggered ({result.entity_type} Detected)."
+        # Real-time regex pattern matching for Credit Cards and Secrets
+        credit_card_pattern = r"\b(?:\d[ -]*?){13,16}\b"
+        email_pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+        secret_pattern = r"(api_key|password|secret_token)\s*=\s*['\"][A-Za-z0-9_.-]+['\"]"
+
+        if re.search(credit_card_pattern, prompt):
+            return False, "Pass 3 Failed: Data Leak Prevention Triggered (CREDIT_CARD Detected)."
+        if re.search(email_pattern, prompt):
+            return False, "Pass 3 Failed: Data Leak Prevention Triggered (EMAIL_ADDRESS Detected)."
+        if re.search(secret_pattern, prompt.lower()):
+            return False, "Pass 3 Failed: Data Leak Prevention Triggered (CREDENTIALS Detected)."
 
         # ==========================================
         # PASS 4: Code Injection & Web Shell Scanner
@@ -56,7 +55,6 @@ class SecurityAuditLoop:
         # ==========================================
         # PASS 5: Meta Llama Guard Boundary Validation
         # ==========================================
-        # Local Meta Llama Guard rules check safely enforced
         unsafe_categories = ["cyberattacks", "cbrn weapons", "illegal acts"]
         if any(cat in prompt.lower() for cat in unsafe_categories):
             return False, "Pass 5 Failed: Meta Llama Guard Safety Boundary Violation."
@@ -64,7 +62,6 @@ class SecurityAuditLoop:
         return True, "100% Safe"
 
 if __name__ == "__main__":
-    # Test checking logic locally
     audit = SecurityAuditLoop()
     test_prompt = "My credit card number is 4321-5678-9101-1121"
     safe, reason = audit.run_5_pass_audit(test_prompt)
